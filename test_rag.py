@@ -9,17 +9,17 @@ Actual Response: {actual_response}
 """
 
 
-def test_monopoly_rules():
+def test_pediatric_question():
     assert query_and_validate(
-        question="How much total money does a player start with in Monopoly? (Answer with the number only)",
-        expected_response="$1500",
+        question="can children safely use smartphone apps for PPG",
+        expected_response="It has not been validated for pediatric use.",
     )
 
 
-def test_ticket_to_ride_rules():
+def test_dataset_question():
     assert query_and_validate(
-        question="How many points does the longest continuous train get in Ticket to Ride? (Answer with the number only)",
-        expected_response="10 points",
+        question="which datasets were used to evaluate motion compensation",
+        expected_response="The PPG-DaLiA dataset was used to evaluate motion compensation. This dataset contains eight different types of activities usually performed in daily routine, including low-, medium-, and high-intensity arm movements such as driving, walking, and table soccer. The data set is designed for heart rate estimation during daily life activities.",
     )
 
 
