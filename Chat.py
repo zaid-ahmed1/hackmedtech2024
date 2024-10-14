@@ -1,5 +1,6 @@
 import streamlit as st
 from query_data import query_rag
+import time
 
 st.set_page_config(
     page_title="Chat",
@@ -14,7 +15,8 @@ if prompt:
     with st.chat_message("user"):
         st.write(prompt)
     # st.write(prompt)
-    query = query_rag(prompt)
+    with st.spinner('Retrieving response...'):
+        query = query_rag(prompt)
     response_text = query[0]
     sources = query[1]
     with st.chat_message("ai"):
