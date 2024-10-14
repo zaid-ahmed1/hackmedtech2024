@@ -1,5 +1,8 @@
 pypdf
 langchain
+langchain-community
 chromadb # Vector storage
 pytest
 boto3
+streamlit
+python-dotenv
