@@ -1,5 +1,13 @@
 import streamlit as st
 from query_data import query_rag
+
+st.set_page_config(
+    page_title="Chat",
+    page_icon="🤖",
+)
+
+st.title("Chat with AI")
+
 prompt = st.chat_input("Enter your question here")
 
 if prompt:
