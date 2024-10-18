@@ -14,7 +14,6 @@ prompt = st.chat_input("Enter your question here")
 if prompt:
     with st.chat_message("user"):
         st.write(prompt)
-    # st.write(prompt)
     with st.spinner('Retrieving response...'):
         query = query_rag(prompt)
     response_text = query[0]

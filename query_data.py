@@ -4,6 +4,10 @@ from langchain.prompts import ChatPromptTemplate
 # from langchain_community.llms.ollama import Ollama
 from langchain_ollama import OllamaLLM
 from get_embedding_function import get_embedding_function
+import openai
+import dotenv
+dotenv.load_dotenv()
+# openai.api_key = dotenv.get_key("OPENAI_API_KEY")
 
 CHROMA_PATH = "chroma"
 
@@ -40,13 +44,29 @@ def query_rag(query_text: str):
     prompt = prompt_template.format(context=context_text, question=query_text)
     # print(prompt)
 
-    model = OllamaLLM(model="mistral")
-    response_text = model.invoke(prompt)
+    response = openai.chat.completions.create(
+        model="gpt-4-turbo",  # Chat model
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ],
+    )
 
+    response_text = response.choices[0].message.content
+
+
+# Extract the actual chunks along with document names
     sources = [doc.metadata.get("id", "").replace("data\\", "") for doc, _score in results]
     formatted_response = f"\: {response_text}\n\n\nSources: {sources}"
+    sources.append(f"Chunk: {doc.page_content}"
+        for doc, _score in results)
     print(formatted_response)
+
+
+    # Return the response text and the actual chunks with document names
     return response_text, sources
+
+
 
 
 if __name__ == "__main__":
