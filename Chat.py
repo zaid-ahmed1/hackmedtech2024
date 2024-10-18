@@ -16,10 +16,14 @@ if prompt:
         st.write(prompt)
     with st.spinner('Retrieving response...'):
         query = query_rag(prompt)
-    response_text = query[0]
-    sources = query[1]
+    response_text, sources, formatted_response = query
+
     with st.chat_message("ai"):
-        st.write(response_text)
-        st.write("Sources:")
-        for source in sources:
-            st.write(f"- {source}")
+        st.markdown(formatted_response)
+
+        # st.write(response_text)
+        # st.write("**Sources:**")
+        # for source in sources:
+        #     st.write(f"- {source}")
+
+    # Display the formatted response in Streamlit

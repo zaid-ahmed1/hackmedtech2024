@@ -55,17 +55,19 @@ def query_rag(query_text: str):
     response_text = response.choices[0].message.content
 
 
-# Extract the actual chunks along with document names
-    sources = [doc.metadata.get("id", "").replace("data\\", "") for doc, _score in results]
-    formatted_response = f"\: {response_text}\n\n\nSources: {sources}"
-    sources.append(f"Chunk: {doc.page_content}"
-        for doc, _score in results)
+    # Extract the actual chunks along with document IDs
+    sources = [
+        f"**Document ID:** {doc.metadata.get('id', 'Unknown').replace('data\\', '')}  \n**Chunk:** {doc.page_content}"
+        for doc, _score in results
+    ]
+
+    # Format the response using Markdown
+    formatted_sources = "\n\n".join(sources)
+    formatted_response = f"{response_text}\n\n\n**Sources:**\n\n{formatted_sources}"
     print(formatted_response)
 
-
-    # Return the response text and the actual chunks with document names
-    return response_text, sources
-
+    # Return the response text and the actual chunks with document IDs
+    return response_text, sources, formatted_response
 
 
 
